@@ -29,8 +29,8 @@ import (
 
 // }
 
-//lets break the above into functions
-
+// lets break the above into functions
+// we have also installed the gorrila mux packae,used to implement routes
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 
@@ -42,4 +42,17 @@ func contact(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "to get in touch please send an email"+
 		"to <a href=\"mailto:support@lenslocked.com\">"+
 		"support@lenslocked.com</a>.")
+}
+
+//now we are going to use the gorila mux in the main function
+
+func main() {
+
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", home)
+	r.HandleFunc("/contact", contact)
+
+	http.ListenAndServe(":3000", r)
+
 }
