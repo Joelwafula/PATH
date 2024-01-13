@@ -44,11 +44,29 @@ func contact(w http.ResponseWriter, r *http.Request) {
 		"support@lenslocked.com</a>.")
 }
 
+func FAQ(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "text/html")
+
+	fmt.Fprint(w, "<h1>This is the FAQ page</h1>")
+
+}
+func PageNotFound(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotFound)
+	fmt.Fprintf(w, "<h1>page is not found</h1>")
+
+}
+
 //now we are going to use the gorila mux in the main function
 
 func main() {
 
 	r := mux.NewRouter()
+	notFoundPage := http.HandlerFunc(PageNotFound)
+
+	r.NotFoundHandler = notFoundPage
+
+	r.HandleFunc("/faq", FAQ)
 
 	r.HandleFunc("/", home)
 	r.HandleFunc("/contact", contact)
