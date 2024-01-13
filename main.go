@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"http"
+	"net/http"
 )
 
 func handlerFunc(w http.ResponseWriter, r *http.Request) {
@@ -16,6 +16,13 @@ func handlerFunc(w http.ResponseWriter, r *http.Request) {
 			"to <a href=\"mailto:support@lenslocked.com\">"+
 			"support@lenslocked.com</a>.")
 
+	} else {
+		w.WriteHeader(http.StatusNotFound)
+
+		fmt.Fprint(w, "<h1>We could not find the page you "+
+			"were looking for :(</h1>"+
+			"<p>Please email us if you keep being sent to an "+
+			"invalid page.</p>")
 	}
 
 }
